@@ -1,3 +1,5 @@
+source 'http://rubygems.org'
+
 gem 'jeweler'
 gem 'activesupport'
 gem 'activerecord'

@@ -146,15 +146,6 @@ module ActsAsKaltura
         rescue
 
         end
-
-        def as_kaltura_entry
-          Kaltura::MediaEntry.new.tap do |entry|
-            entry.name = title
-            entry.description = description
-            entry.tags = tags.map &:name
-            entry.media_type = Kaltura::Constants::Media::Type::VIDEO
-          end
-        end
     end
   end
 end
