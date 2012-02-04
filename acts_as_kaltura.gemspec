@@ -5,11 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_kaltura"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["nhm tanveer hossain khan"]
-  s.date = "2012-02-01"
+  s.date = "2012-02-04"
+  s.description = "Acts as kaltura"
   s.email = "hasan@somewherein.net"
   s.extra_rdoc_files = [
     "README.md"
@@ -28,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/acts_as_kaltura/two_way_attr_accessor.rb",
     "lib/acts_as_kaltura/video.rb"
   ]
+  s.homepage = "https://github.com/we4tech/acts_as_kaltura/"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
   s.summary = "An extension for supporting acts_as_kaltura_video and acts_as_kaltura_annotation (which automatically maintains kaltura video and cuepoint)"
@@ -37,19 +39,19 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
-      s.add_runtime_dependency(%q<activerecord>, [">= 0"])
+      s.add_runtime_dependency(%q<rails>, [">= 3.1.3"])
+      s.add_runtime_dependency(%q<sqlite3>, [">= 0"])
       s.add_runtime_dependency(%q<velir_kaltura-ruby>, [">= 0"])
     else
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<activesupport>, [">= 0"])
-      s.add_dependency(%q<activerecord>, [">= 0"])
+      s.add_dependency(%q<rails>, [">= 3.1.3"])
+      s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<velir_kaltura-ruby>, [">= 0"])
     end
   else
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<activesupport>, [">= 0"])
-    s.add_dependency(%q<activerecord>, [">= 0"])
+    s.add_dependency(%q<rails>, [">= 3.1.3"])
+    s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<velir_kaltura-ruby>, [">= 0"])
   end
 end
