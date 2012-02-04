@@ -5,6 +5,8 @@ Based on velir kaltura ruby library, we [somewhere in... ruby devs](http://www.s
 
 ## acts_as_kaltura_video
 
+![Travis status](https://secure.travis-ci.org/we4tech/acts_as_kaltura.png)
+
 It sync your video model with kaltura MediaEntry. 
  
 ### Usages - 
