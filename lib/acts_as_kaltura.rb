@@ -7,7 +7,7 @@ require 'acts_as_kaltura/video'
 require 'acts_as_kaltura/annotation'
 
 module ActsAsKaltura
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 end
 
 module ActiveRecord

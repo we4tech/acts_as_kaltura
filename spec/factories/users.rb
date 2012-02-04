@@ -4,7 +4,6 @@ FactoryGirl.define do
   factory :user, :class => User do
     sequence(:email) {|n| "holatest#{n}@swi.com"}
     password "123456"
-    password_confirmation "123456"
   end
 
   factory :admin_user, :parent => :user do

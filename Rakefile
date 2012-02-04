@@ -1,8 +1,18 @@
+require 'rubygems'
+require 'bundler'
+require 'rake'
 require 'rake/testtask'
+require 'rspec/core/rake_task'
+Bundler::GemHelper.install_tasks
 
-Rake::TestTask.new do |test|
-  test.pattern = 'test/**/*_test.rb'
-  test.libs << 'test'
+task :default => 'spec:unit' do
+end
+
+namespace :spec do
+  desc "Run acceptance specs"
+  RSpec::Core::RakeTask.new('unit') do |t|
+    t.pattern = 'spec/lib/**/*_spec.rb'
+  end
 end
 
 begin

@@ -1,0 +1,12 @@
+development:
+  login: hasan@somewherein.net
+  password: "12ab@#CD"
+  partner_id: 819442
+  admin_secret: 175c396a37474df785be97968b652bce
+
+test:
+  login: hasan@somewherein.net
+  password: "12ab@#CD"
+  partner_id: 819442
+  admin_secret: 175c396a37474df785be97968b652bce
+  debug: true
