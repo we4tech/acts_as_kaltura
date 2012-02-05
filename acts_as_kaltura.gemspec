@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_kaltura"
-  s.version = "1.0.2"
+  s.version = "1.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["nhm tanveer hossain khan"]
-  s.date = "2012-02-04"
+  s.date = "2012-02-05"
   s.description = "Acts as kaltura"
   s.email = "hasan@somewherein.net"
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "lib/acts_as_kaltura/extension/response.rb",
     "lib/acts_as_kaltura/extension/service.rb",
     "lib/acts_as_kaltura/two_way_attr_accessor.rb",
+    "lib/acts_as_kaltura/version.rb",
     "lib/acts_as_kaltura/video.rb"
   ]
   s.homepage = "https://github.com/we4tech/acts_as_kaltura/"
