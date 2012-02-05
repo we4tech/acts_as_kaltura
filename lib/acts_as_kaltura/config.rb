@@ -12,8 +12,21 @@ module ActsAsKaltura
     end
 
     included do
-      cattr_accessor :_kaltura_config_file
-      @@_kaltura_config_file = Rails.root.join('config', 'kaltura.yml').to_s
+      @@_kaltura_config_file = nil
+
+      class << self
+        def _kaltura_config_file=(file)
+          @@_kaltura_config_file = file
+        end
+
+        def _kaltura_config_file
+          if @@_kaltura_config_file.nil?
+            @@_kaltura_config_file = Rails.root.join('config', 'kaltura.yml').to_s
+          end
+
+          @@_kaltura_config_file
+        end
+      end
 
       cattr_accessor :_kaltura_client
     end

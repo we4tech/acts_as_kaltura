@@ -5,14 +5,13 @@ Bundler.require
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'rails/all'
+require 'acts_as_kaltura'
 require 'spec_helper/rails'
-
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'webmock/rspec'
 require 'factory_girl_rails'
 require 'shoulda-matchers'
-require 'acts_as_kaltura'
 require 'spec_helper/rspec'
 require 'spec_helper/active_record'
 require 'spec_helper/models'

@@ -1,3 +1,4 @@
+require 'acts_as_kaltura/version'
 require 'acts_as_kaltura/two_way_attr_accessor'
 require 'acts_as_kaltura/config'
 require 'acts_as_kaltura/callbacks'
@@ -7,7 +8,6 @@ require 'acts_as_kaltura/video'
 require 'acts_as_kaltura/annotation'
 
 module ActsAsKaltura
-  VERSION = '1.0.1'
 end
 
 module ActiveRecord
