@@ -1,11 +1,11 @@
 # ActsAsKaltura
 
+![Travis status](https://secure.travis-ci.org/we4tech/acts_as_kaltura.png)
+
 Kaltura is SaaS based video streaming platform, officially kaltura ruby API is available [here](http://corp.kaltura.com/Products/Kaltura-API). Another fork could be found [here](https://github.com/Velir/kaltura-ruby).
 Based on velir kaltura ruby library, we [somewhere in... ruby devs](http://www.somewherein.net) have built this gem to simplify kaltura video and cuepoint synchronization process.
 
 ## acts_as_kaltura_video
-
-![Travis status](https://secure.travis-ci.org/we4tech/acts_as_kaltura.png)
 
 It sync your video model with kaltura MediaEntry. 
  
