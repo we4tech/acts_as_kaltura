@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_kaltura"
-  s.version = "1.0.3"
+  s.version = "1.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["nhm tanveer hossain khan"]
-  s.date = "2012-02-05"
+  s.date = "2012-02-06"
   s.description = "Acts as kaltura"
   s.email = "hasan@somewherein.net"
   s.extra_rdoc_files = [
@@ -40,20 +40,20 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<rails>, [">= 3.1.3"])
-      s.add_runtime_dependency(%q<sqlite3>, [">= 0"])
       s.add_runtime_dependency(%q<velir_kaltura-ruby>, [">= 0"])
+      s.add_runtime_dependency(%q<activesupport>, ["~> 3.1.3"])
+      s.add_runtime_dependency(%q<activerecord>, ["~> 3.1.3"])
     else
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rails>, [">= 3.1.3"])
-      s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<velir_kaltura-ruby>, [">= 0"])
+      s.add_dependency(%q<activesupport>, ["~> 3.1.3"])
+      s.add_dependency(%q<activerecord>, ["~> 3.1.3"])
     end
   else
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rails>, [">= 3.1.3"])
-    s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<velir_kaltura-ruby>, [">= 0"])
+    s.add_dependency(%q<activesupport>, ["~> 3.1.3"])
+    s.add_dependency(%q<activerecord>, ["~> 3.1.3"])
   end
 end
 

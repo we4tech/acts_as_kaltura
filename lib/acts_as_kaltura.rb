@@ -1,3 +1,4 @@
+require 'active_support/core_ext'
 require 'acts_as_kaltura/version'
 require 'acts_as_kaltura/two_way_attr_accessor'
 require 'acts_as_kaltura/config'

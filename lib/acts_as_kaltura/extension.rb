@@ -8,10 +8,8 @@ module ActsAsKaltura
   module Extension
     extend ActiveSupport::Concern
 
-    module InstanceMethods
-      def cuepoint_service
-        @cuepoint_service ||= ActsAsKaltura::Extension::Service::CuePointService.new(self)
-      end
+    def cuepoint_service
+      @cuepoint_service ||= ActsAsKaltura::Extension::Service::CuePointService.new(self)
     end
   end
 end

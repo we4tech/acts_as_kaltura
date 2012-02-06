@@ -24,27 +24,25 @@ module ActsAsKaltura
       end
     end
 
-    module InstanceMethods
-      protected
-        def reset_kaltura_delegated_attributes
-          if self.class._kaltura_options.present?
-            self.class._kaltura_options[:delegate].each do |attr|
-              self.send(:"#{attr}=", nil)
-            end
+    protected
+      def reset_kaltura_delegated_attributes
+        if self.class._kaltura_options.present?
+          self.class._kaltura_options[:delegate].each do |attr|
+            self.send(:"#{attr}=", nil)
           end
         end
+      end
 
-        def _lookup_local_attribute(attr)
-          self.read_attribute attr
-        end
+      def _lookup_local_attribute(attr)
+        self.read_attribute attr
+      end
 
-        def _lookup_kaltura_attribute(attr)
-          if entry = self.kaltura_entry
-            value = entry.send(attr)
-            self.update_column(attr, value) if value
-            value
-          end
+      def _lookup_kaltura_attribute(attr)
+        if entry = self.kaltura_entry
+          value = entry.send(attr)
+          self.update_column(attr, value) if value
+          value
         end
-    end
+      end
   end
 end

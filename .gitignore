@@ -2,4 +2,5 @@
 .DS_Store
 pkg
 *.sqlite3
-
+RAILS_VERSION=3
+Gemfile.lock
