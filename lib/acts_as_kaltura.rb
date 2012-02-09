@@ -7,6 +7,7 @@ require 'acts_as_kaltura/delegator'
 require 'acts_as_kaltura/extension'
 require 'acts_as_kaltura/video'
 require 'acts_as_kaltura/annotation'
+require 'acts_as_kaltura/category'
 
 module ActsAsKaltura
 end
@@ -18,6 +19,7 @@ module ActiveRecord
     include ActsAsKaltura::Delegator
     include ActsAsKaltura::Video
     include ActsAsKaltura::Annotation
+    include ActsAsKaltura::Category
   end
 end
 

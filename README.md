@@ -73,6 +73,13 @@ end
 
 > * cuepoint_key (String)
 
+## acts_as_kaltura_category
+
+Sync local categories with Kaltura. You have to set existing kaltura category id to any of your parent categories. When you create sub category (you must have `parent` method exposed) it will automatically pushed to kaltura. Same goes for updating and deleting kaltura category. (if you destroy child category it will automatically remove kaltura category)
+
+### Required fields
+> * kaltura_category_key (String)
+
 ## How to install
 > gem install acts_as_kaltura
 
