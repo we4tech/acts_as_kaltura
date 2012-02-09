@@ -35,3 +35,23 @@ class Chapter < ActiveRecord::Base
     end
   end
 end
+
+class Category < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :parent, :class_name => 'Category'
+  has_many :categories, :foreign_key => 'parent_id'
+
+  has_and_belongs_to_many :videos
+
+  acts_as_kaltura_category
+
+  def as_kaltura_category
+    Kaltura::Category.new.tap do |c|
+      c.name = self.name
+
+      if kaltura_reference_found?
+        c.parent_id = self.parent.kaltura_category_key
+      end
+    end
+  end
+end

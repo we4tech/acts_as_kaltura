@@ -9,4 +9,4 @@ test:
   password: "12ab@#CD"
   partner_id: 819442
   admin_secret: 175c396a37474df785be97968b652bce
-  debug: false
+  debug: true

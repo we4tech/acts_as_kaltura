@@ -51,4 +51,16 @@ ActiveRecord::Schema.define(:version => 20120130055755) do
     t.text "thumbnail_url"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string  "name"
+    t.integer "user_id"
+    t.integer "parent_id"
+    t.string 'kaltura_category_key'
+  end
+
+  create_table "categories_videos", :id => false, :force => true do |t|
+    t.integer "category_id"
+    t.integer "video_id"
+  end
+
 end
