@@ -60,5 +60,37 @@ RSpec.configure do |config|
              :headers => { 'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'214', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Ruby' }).
         to_return(:status => 200, :body => "", :headers => { })
 
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?service=category&action=add").
+        to_return(:status => 200, :body => %{<?xml version="1.0" encoding="utf-8"?><xml><result><objectType>KalturaCategory</objectType><id>4493342</id><parentId>4107302</parentId><depth>1</depth><partnerId>819442</partnerId><name>Cat 5315126992</name><fullName>video&gt;Cat 5315126992</fullName><entriesCount>0</entriesCount><createdAt>1328781750</createdAt></result><executionTime>0.079616069793701</executionTime></xml>}, :headers => { })
+
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?service=category&action=update").
+        to_return(:status => 200, :body => %{<?xml version="1.0" encoding="utf-8"?><xml><result><objectType>KalturaCategory</objectType><id>4493342</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>Hola</name><fullName>Hola</fullName><entriesCount>1</entriesCount><createdAt>1324293224</createdAt></result><executionTime>1.143100976944</executionTime></xml>}, :headers => { })
+
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?action=delete&service=category").
+        with(:body    => { "format"=>"2", "clientTag"=>"ruby", "id"=>"4493342", "partnerId"=>"819442", "ks"=>"NjczYzk0NzYyYTliMDQ4MTBjOGMzOTM5NWFkYWU3YzJiYjRmNDBiMnw4MTk0NDI7ODE5NDQyOzEzMjczMjM1ODA7MjsxMzI3MjM3MTgwLjY0Mjk7Ozs7", "kalsig"=>"32d8f362e964ba9d0d1c03f02b6ec8af" },
+             :headers => { 'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'211', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Ruby' }).
+        to_return(:status => 200, :body => "", :headers => { })
+
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?action=get&service=category").
+        with(:body    => { "format"=>"2", "clientTag"=>"ruby", "id"=>"4493342", "partnerId"=>"819442", "ks"=>"NjczYzk0NzYyYTliMDQ4MTBjOGMzOTM5NWFkYWU3YzJiYjRmNDBiMnw4MTk0NDI7ODE5NDQyOzEzMjczMjM1ODA7MjsxMzI3MjM3MTgwLjY0Mjk7Ozs7", "kalsig"=>"32d8f362e964ba9d0d1c03f02b6ec8af" },
+             :headers => { 'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'211', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Ruby' }).
+        to_return(:status  => 200,
+                  :body    => %{<?xml version="1.0" encoding="utf-8"?><xml><result><error><code>CATEGORY_NOT_FOUND</code><message>Category id "4493652" not found</message></error></result><executionTime>0.031108140945435</executionTime></xml>},
+                  :headers => { })
+
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?action=get&service=category").
+        with(:body    => { "format"=>"2", "clientTag"=>"ruby", "id"=>"4107302", "partnerId"=>"819442", "ks"=>"NjczYzk0NzYyYTliMDQ4MTBjOGMzOTM5NWFkYWU3YzJiYjRmNDBiMnw4MTk0NDI7ODE5NDQyOzEzMjczMjM1ODA7MjsxMzI3MjM3MTgwLjY0Mjk7Ozs7", "kalsig"=>"6162e0380365fda64afd09a219dd406d" },
+             :headers => { 'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'211', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Ruby' }).
+        to_return(:status  => 200,
+                  :body    => %{<?xml version="1.0" encoding="utf-8"?><xml><result><objectType>KalturaCategory</objectType><id>4107302</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>Hola</name><fullName>Hola</fullName><entriesCount>1</entriesCount><createdAt>1324293224</createdAt></result><executionTime>0.19005990028381</executionTime></xml>},
+                  :headers => { })
+
+    stub_request(:post, "http://www.kaltura.com/api_v3/index.php?action=list&service=category").
+        with(:body    => { "format"=>"2", "clientTag"=>"ruby", "filter:objectType"=>"CategoryFilter", "filter:parentIdEqual"=>"0", "partnerId"=>"819442", "ks"=>"NjczYzk0NzYyYTliMDQ4MTBjOGMzOTM5NWFkYWU3YzJiYjRmNDBiMnw4MTk0NDI7ODE5NDQyOzEzMjczMjM1ODA7MjsxMzI3MjM3MTgwLjY0Mjk7Ozs7", "kalsig"=>"b8d5843557dfe699142069e76e977123" },
+             :headers => { 'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'Content-Length'=>'260', 'Content-Type'=>'application/x-www-form-urlencoded', 'User-Agent'=>'Ruby' }).
+        to_return(:status  => 200,
+                  :body    => %{<?xml version="1.0" encoding="utf-8"?><xml><result><objectType>KalturaCategoryListResponse</objectType><objects><item><objectType>KalturaCategory</objectType><id>4107302</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>Hola</name><fullName>Hola</fullName><entriesCount>1</entriesCount><createdAt>1324293224</createdAt></item><item><objectType>KalturaCategory</objectType><id>4107312</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>Fish</name><fullName>Fish</fullName><entriesCount>1</entriesCount><createdAt>1324293225</createdAt></item><item><objectType>KalturaCategory</objectType><id>4107322</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>hd content</name><fullName>hd content</fullName><entriesCount>1</entriesCount><createdAt>1324293226</createdAt></item><item><objectType>KalturaCategory</objectType><id>4107332</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>Aquarium</name><fullName>Aquarium</fullName><entriesCount>1</entriesCount><createdAt>1324293227</createdAt></item><item><objectType>KalturaCategory</objectType><id>4107342</id><parentId>0</parentId><depth>0</depth><partnerId>819442</partnerId><name>image</name><fullName>image</fullName><entriesCount>1</entriesCount><createdAt>1324293227</createdAt></item></objects><totalCount>5</totalCount></result><executionTime>0.054650068283081</executionTime></xml>},
+                  :headers => { })
+
   end
 end
