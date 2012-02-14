@@ -53,7 +53,6 @@ It will sync your `Annotation` model with kaltura cuepoint annotation object.
 class Annotation < ActiveRecord::Base
   belongs_to  :video
   acts_as_kaltura_annotation
-
   def as_annotation_cuepoint
     ActsAsKaltura::Extension::KalturaAnnotation.new.tap do |cp|
       cp.cue_point_type = ActsAsKaltura::Extension::KalturaAnnotation::TYPE_ANNOTATION
@@ -69,6 +68,7 @@ class Annotation < ActiveRecord::Base
   end
 end
 ```  
+
 ### Annotation model must includes the following fields -
 
 > * cuepoint_key (String)
@@ -77,10 +77,39 @@ end
 
 Sync local categories with Kaltura. You have to set existing kaltura category id to any of your parent categories. When you create sub category (you must have `parent` method exposed) it will automatically pushed to kaltura. Same goes for updating and deleting kaltura category. (if you destroy child category it will automatically remove kaltura category)
 
+### Usages -
+
+```ruby
+class Category < ActiveRecord::Base
+  belongs_to :parent, :class_name => 'Category'
+  has_many :categories, :foreign_key => 'parent_id'
+  has_and_belongs_to_many :videos
+
+  acts_as_kaltura_category
+
+  def as_kaltura_category
+    Kaltura::Category.new.tap do |c|
+      c.name = self.name
+      if kaltura_reference_found?
+        c.parent_id = self.parent.kaltura_category_key
+      end
+    end
+  end
+end
+```  
+
+
 ### Required fields
+
 > * kaltura_category_key (String)
 
 ## How to install
+
 > gem install acts_as_kaltura
+
+## Configuration
+
+Create file under `RAILS_ROOT/config/kaltura.yml`.
+[Checkout the sample](kaltura.yml.sample)
 
 
