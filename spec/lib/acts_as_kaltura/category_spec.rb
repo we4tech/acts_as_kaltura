@@ -9,7 +9,7 @@ describe ActsAsKaltura::Category do
     end
   end
 
-  describe '.create' do
+  describe '#create' do
     let!(:parent) { Factory(:category, :kaltura_category_key => '4107302') }
 
     it 'should create subcategory reference in kaltura' do
@@ -37,7 +37,7 @@ describe ActsAsKaltura::Category do
     end
   end
 
-  describe '.update' do
+  describe '#update' do
     let!(:parent) { Factory(:category, :kaltura_category_key => '4107302') }
 
     it 'should update an existing category' do
@@ -56,7 +56,7 @@ describe ActsAsKaltura::Category do
     end
   end
 
-  describe '.destroy' do
+  describe '#destroy' do
     let!(:parent) { Factory(:category, :kaltura_category_key => '4107302') }
     let!(:child) { Factory(:category, :parent => parent) }
 
@@ -76,14 +76,14 @@ describe ActsAsKaltura::Category do
     end
   end
 
-  describe '.kaltura_category' do
+  describe '#kaltura_category' do
     let!(:parent) { Factory(:category, :kaltura_category_key => '4107302') }
     subject { parent.kaltura_category }
 
     its(:id) { should == 4107302 }
   end
 
-  describe '.kaltura_siblings' do
+  describe '#kaltura_siblings' do
     let!(:parent) { Factory(:category, :kaltura_category_key => '4107302') }
 
     it 'should load all existing categories' do
@@ -94,5 +94,13 @@ describe ActsAsKaltura::Category do
       subject { parent.kaltura_siblings }
       it { should be_instance_of Kaltura::Response::CategoryListResponse }
     end
+  end
+
+  describe '.kaltura_parent_categories' do
+    let!(:categories) { Category.kaltura_parent_categories }
+    subject { categories }
+
+    it { should be }
+    it { subject.objects.map(&:parent_id).should == categories.total_count.times.map { 0 } }
   end
 end

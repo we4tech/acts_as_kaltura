@@ -10,6 +10,14 @@ module ActsAsKaltura
         before_update :update_kaltura_category
         before_destroy :destroy_kaltura_category
       end
+
+      #
+      # Retrieve all categories from kaltura which has no parent id
+      def kaltura_parent_categories
+        filter = Kaltura::Filter::CategoryFilter.new
+        filter.parent_id_equal = 0
+        self.kaltura_client.category_service.list(filter)
+      end
     end
 
     def kaltura_category

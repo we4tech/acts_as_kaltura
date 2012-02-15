@@ -112,4 +112,7 @@ end
 Create file under `RAILS_ROOT/config/kaltura.yml`.
 [Checkout the sample](kaltura.yml.sample)
 
+## Changes
+
+* Added kaltura_parent_categories class method
 

@@ -13,4 +13,5 @@ group :test do
   gem 'factory_girl_rails'
   gem 'webmock'
   gem 'shoulda-matchers'
+  gem 'guard-rspec'
 end
