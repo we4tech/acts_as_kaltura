@@ -116,3 +116,6 @@ Create file under `RAILS_ROOT/config/kaltura.yml`.
 
 * Added kaltura_parent_categories class method
 
+* Made kaltura_reference_found? method public
+
+

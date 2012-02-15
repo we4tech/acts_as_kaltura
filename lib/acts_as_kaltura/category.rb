@@ -41,10 +41,9 @@ module ActsAsKaltura
       self.class.kaltura_client.category_service.list(filter)
     end
 
-    protected
-      def kaltura_reference_found?
-        self.parent && self.parent.kaltura_category_key.present?
-      end
+    def kaltura_reference_found?
+      self.parent && self.parent.kaltura_category_key.present?
+    end
 
     private
       def create_kaltura_category
