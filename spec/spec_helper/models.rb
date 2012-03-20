@@ -2,10 +2,22 @@ class User < ActiveRecord::Base
   has_many :videos
 end
 
+class Company < ActiveRecord::Base
+  has_one :setting, :dependent => :destroy
+  has_many :videos, :dependent => :destroy
+end
+
+class Setting < ActiveRecord::Base
+  belongs_to :company
+end
+
 class Video < ActiveRecord::Base
   belongs_to :user
+  belongs_to :company
   has_many :chapters
-  acts_as_kaltura_video :delegate => [:thumbnail_url, :duration]
+  acts_as_kaltura_video :delegate => [:thumbnail_url, :duration],
+                        :setting_scope => lambda { |v| v.company && v.company.setting ? v.company.setting.attributes.symbolize_keys!() : nil }
+
 
   def as_kaltura_entry
     Kaltura::MediaEntry.new.tap do |entry|
@@ -19,6 +31,7 @@ end
 class Chapter < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
+
   acts_as_kaltura_annotation
 
   def as_annotation_cuepoint
@@ -55,3 +68,7 @@ class Category < ActiveRecord::Base
     end
   end
 end
+
+
+
+

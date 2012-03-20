@@ -43,25 +43,28 @@ module ActsAsKaltura
       def kaltura_client(env = Rails.env.to_s)
         if _kaltura_client.nil?
           configs = kaltura_configs(env)
-          config  = Kaltura::Configuration.new(configs[:partner_id])
-
-          # Set timeout if mentioned in configuration
-          if configs[:timeout].present?
-            config.timeout = configs[:timeout]
-          end
-
-          # Set debug logger if mentioned in configuration
-          if configs[:debug]
-            config.logger = ActsAsKaltura::Config::Logger.new
-            _debug_response
-          end
-
-          client          = Kaltura::Client.new(config)
-          session         = client.session_service.start(
-              configs[:admin_secret], '', Kaltura::Constants::SessionType::ADMIN)
-          client.ks       = session
-          _kaltura_client = client
+        else
+          configs = _kaltura_client
         end
+
+        config  = Kaltura::Configuration.new(configs[:partner_id])
+
+        # Set timeout if mentioned in configuration
+        if configs[:timeout].present?
+          config.timeout = configs[:timeout]
+        end
+
+        # Set debug logger if mentioned in configuration
+        if configs[:debug]
+          config.logger = ActsAsKaltura::Config::Logger.new
+          _debug_response
+        end
+
+        client          = Kaltura::Client.new(config)
+        session         = client.session_service.start(
+            configs[:admin_secret], '', Kaltura::Constants::SessionType::ADMIN)
+        client.ks       = session
+        _kaltura_client = client
 
         _kaltura_client
       end
