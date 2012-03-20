@@ -29,6 +29,7 @@ module ActsAsKaltura
       end
 
       cattr_accessor :_kaltura_client
+      cattr_accessor :_company_setting
     end
 
     module ClassMethods
@@ -42,7 +43,12 @@ module ActsAsKaltura
 
       def kaltura_client(env = Rails.env.to_s)
         if _kaltura_client.nil?
-          configs = kaltura_configs(env)
+          if _company_setting.present?
+             configs = _company_setting
+          else
+            configs = kaltura_configs(env)
+          end
+
           config  = Kaltura::Configuration.new(configs[:partner_id])
 
           # Set timeout if mentioned in configuration

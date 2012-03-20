@@ -27,6 +27,7 @@ module ActsAsKaltura
         validates :video_file, :presence => { :on => :create }
 
         # Set filters
+        after_validation :init_setting_scope
         before_save :process_uploaded_video_file
         before_create :create_kaltura_video_entry
         before_update :update_kaltura_video_entry
@@ -38,6 +39,14 @@ module ActsAsKaltura
     # Push user uploaded video file to kaltura server
     # If successful set upload token with the object
     #
+
+    def init_setting_scope
+      if self._kaltura_options[:setting_scope].present?
+        setting = self._kaltura_options[:setting_scope]
+        self.class._company_setting = setting.call(self)
+      end
+    end
+
     def process_uploaded_video_file
       if @video_file.present?
         video_file_stream     = if @video_file.respond_to?(:path, true)
@@ -51,7 +60,7 @@ module ActsAsKaltura
       end
     end
 
-    #
+    #                                                                   setting_scope
     # Create kaltura video entry based on current video data
     # if successful set kaltura id
     #

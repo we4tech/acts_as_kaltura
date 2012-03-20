@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130055755) do
+ActiveRecord::Schema.define(:version => 20120318055757) do
 
   create_table "chapters", :force => true do |t|
     t.string "title"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120130055755) do
 
   create_table "videos", :force => true do |t|
     t.integer "user_id"
+    t.integer  "company_id"
     t.string "title"
     t.text "description"
     t.string "tags"
@@ -63,4 +64,25 @@ ActiveRecord::Schema.define(:version => 20120130055755) do
     t.integer "video_id"
   end
 
+  create_table "settings", :force => true do |t|
+    t.string   "partner_id"
+    t.string   "category"
+    t.string   "player_id"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "features_hash"
+    t.string   "login"
+    t.string   "password"
+    t.string   "admin_secret"
+  end
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.text     "address"
+    t.string   "email"
+    t.string   "contact"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 end
