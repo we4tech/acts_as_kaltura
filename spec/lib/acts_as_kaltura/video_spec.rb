@@ -98,7 +98,7 @@ describe ActsAsKaltura::Video do
 
   describe '#video with company association' do
 
-    context 'test video created with out company' do
+    context 'when video created with out company' do
       let!(:video) {Factory(:video)}
 
       it 'should have company' do
@@ -110,7 +110,7 @@ describe ActsAsKaltura::Video do
       end
     end
 
-    context 'test video created with company' do
+    context 'when video created with company' do
       let!(:video) {Factory(:video_1, :company => Factory(:company_1, :setting => Factory(:setting_1)))}
 
       it 'should have company' do
