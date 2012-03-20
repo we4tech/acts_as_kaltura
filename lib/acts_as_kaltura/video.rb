@@ -60,7 +60,6 @@ module ActsAsKaltura
       end
     end
 
-    #                                                                   setting_scope
     # Create kaltura video entry based on current video data
     # if successful set kaltura id
     #

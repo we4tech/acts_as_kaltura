@@ -13,7 +13,12 @@ It sync your video model with kaltura MediaEntry.
 
 ```ruby
 class Video
-  acts_as_kaltura_video :delegate => [:thumbnail_url, :duration]
+  acts_as_kaltura_video :delegate => [:thumbnail_url, :duration],
+                        # If you don't mention :setting_scope it will take
+                        # configuration from config/kaltura.yml
+                        :setting_scope => lambda { |v|
+                          #... provide configuration hash
+                        }
 
   # Set media entry object based on your required fields
   def as_kaltura_entry
