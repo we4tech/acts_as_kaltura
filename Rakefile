@@ -22,8 +22,8 @@ begin
     gem.summary = "An extension for supporting acts_as_kaltura_video and acts_as_kaltura_annotation (which automatically maintains kaltura video and cuepoint)"
     gem.homepage = 'https://github.com/we4tech/acts_as_kaltura/'
     gem.description = 'Acts as kaltura'
-    gem.email   = "hasan@somewherein.net"
-    gem.authors = ["nhm tanveer hossain khan"]
+    gem.email   = ["hasan@somewherein.net", "goodnafi@gmail.com"]
+    gem.authors = ["nhm tanveer hossain khan", "nafi ul karim"]
     gem.files   = Dir["{lib}/**/*"]
   end
 

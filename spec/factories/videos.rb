@@ -5,5 +5,18 @@ FactoryGirl.define do
     sequence(:title) {|n| "Video #{n}"}
     sequence(:description) {|n| "Video description #{n}"}
     video_file { File.open(Rails.root.join('spec', 'fixtures', 'movie2.m4v')) }
+    after_build{|video| video.company = Factory(:company_1)}
+  end
+
+  factory :video_1, :class => Video do
+    sequence(:title) {|n| "Video #{n}"}
+    sequence(:description) {|n| "Video description #{n}"}
+    video_file { File.open(Rails.root.join('spec', 'fixtures', 'movie2.m4v')) }
+  end
+
+  factory :video_2, :class => Video do
+    sequence(:title) {|n| "Video #{n}"}
+    sequence(:description) {|n| "Video description #{n}"}
+    video_file { File.open(Rails.root.join('spec', 'fixtures', 'movie2.m4v')) }
   end
 end
