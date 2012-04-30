@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence(:address) {|n| "company #{n} address"}
     sequence(:email) {|n| "company#{n}@swi.net"}
     sequence(:contact) {|n| "#{n}"}
-    after_build {|company| company.setting = Factory(:setting_1)}
+    after_build {|company| company.setting = FactoryGirl.create(:setting_1)}
   end
 
   factory :company_2, :class => Company do

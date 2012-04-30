@@ -5,7 +5,7 @@ describe ActsAsKaltura::Delegator do
 
   context 'when created' do
     describe '.delegates_kaltura_attributes' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
 
       it 'should have nil thumbnail attribute' do
         video.read_attribute(:thumbnail_url).should be_nil
@@ -31,7 +31,7 @@ describe ActsAsKaltura::Delegator do
 
   context 'when updated' do
     describe '.delegates_kaltura_attributes' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
       before {
         video.title = 'Test'
         video.save

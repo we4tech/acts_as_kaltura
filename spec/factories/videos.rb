@@ -5,7 +5,7 @@ FactoryGirl.define do
     sequence(:title) {|n| "Video #{n}"}
     sequence(:description) {|n| "Video description #{n}"}
     video_file { File.open(Rails.root.join('spec', 'fixtures', 'movie2.m4v')) }
-    after_build{|video| video.company = Factory(:company_1)}
+    after_build{|video| video.company = FactoryGirl.create(:company_1)}
   end
 
   factory :video_1, :class => Video do

@@ -10,8 +10,8 @@ end
 describe ActsAsKaltura::Video do
 
   describe '#process_uploaded_video_file' do
-    let!(:video) { Factory.build(:video) }
-    let!(:video_no_video_file) { Factory.build(:video, :video_file => nil) }
+    let!(:video) { FactoryGirl.build(:video) }
+    let!(:video_no_video_file) { FactoryGirl.build(:video, :video_file => nil) }
 
     it 'should set uploaded video kaltura reference' do
       video.save
@@ -21,7 +21,7 @@ describe ActsAsKaltura::Video do
   end
 
   describe '#create_kaltura_video_entry' do
-    let!(:video) { Factory.build(:video) }
+    let!(:video) { FactoryGirl.build(:video) }
 
     it 'should create kaltura video entry' do
       lambda { video.save }.should change(Video, :count).by(1)
@@ -33,7 +33,7 @@ describe ActsAsKaltura::Video do
 
   describe '#update_kaltura_video_entry' do
     context 'when no new video file added' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
 
       it 'should update existing kaltura video entry' do
         lambda {
@@ -49,7 +49,7 @@ describe ActsAsKaltura::Video do
     end
 
     context 'when new video file added' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
 
       it 'should update existing kaltura video entry' do
         lambda {
@@ -68,7 +68,7 @@ describe ActsAsKaltura::Video do
   describe '#destroy_kaltura_video_entry' do
 
     context 'test on mock object' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
 
       it 'should invoke destroy_kaltura_video_entry' do
         video.should_receive(:destroy_kaltura_video_entry).and_return(true)
@@ -77,7 +77,7 @@ describe ActsAsKaltura::Video do
     end
 
     context 'with kaltura video' do
-      let!(:video) { Factory(:video) }
+      let!(:video) { FactoryGirl.create(:video) }
       before do
         stub_request(:post, 'http://www.kaltura.com/api_v3/index.php?service=media&action=get').
             to_return(:body => %{<?xml version="1.0" encoding="utf-8"?><xml><result><error><code>ENTRY_ID_NOT_FOUND</code><message>Entry id "0_zg72qm1n" not found</message></error></result><executionTime>0.039528846740723</executionTime></xml>})
@@ -99,7 +99,7 @@ describe ActsAsKaltura::Video do
   describe '#video with company association' do
 
     context 'when video created with out company' do
-      let!(:video) {Factory(:video)}
+      let!(:video) {FactoryGirl.create(:video)}
 
       it 'should have company' do
         video.company.should be
@@ -111,7 +111,7 @@ describe ActsAsKaltura::Video do
     end
 
     context 'when video created with company' do
-      let!(:video) {Factory(:video_1, :company => Factory(:company_1, :setting => Factory(:setting_1)))}
+      let!(:video) {FactoryGirl.create(:video_1, :company => FactoryGirl.create(:company_1, :setting => FactoryGirl.create(:setting_1)))}
 
       it 'should have company' do
         video.company.should be

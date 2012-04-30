@@ -8,9 +8,9 @@ describe ActsAsKaltura::Annotation do
     end
 
     describe '#save_kaltura_annotation' do
-      let(:user) { Factory(:user) }
-      let!(:video) { Factory(:video, :user => user) }
-      let!(:chapter) { Factory(:chapter, :video => video, :user => user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let!(:video) { FactoryGirl.create(:video, :user => user) }
+      let!(:chapter) { FactoryGirl.create(:chapter, :video => video, :user => user) }
       subject { chapter }
 
       its(:cuepoint_key) { should be }
@@ -19,9 +19,9 @@ describe ActsAsKaltura::Annotation do
     end
 
     describe '#update_kaltura_annotation' do
-      let(:user) { Factory(:user) }
-      let!(:video) { Factory(:video, :user => user) }
-      let!(:chapter) { Factory(:chapter, :video => video, :user => user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let!(:video) { FactoryGirl.create(:video, :user => user) }
+      let!(:chapter) { FactoryGirl.create(:chapter, :video => video, :user => user) }
 
       it 'should invoke update_kaltura_annotation' do
         chapter.should_receive(:update_kaltura_annotation).and_return(true)
@@ -38,9 +38,9 @@ describe ActsAsKaltura::Annotation do
     end
 
     describe '#delete_kaltura_annotation' do
-      let(:user) { Factory(:user) }
-      let!(:video) { Factory(:video, :user => user) }
-      let!(:chapter) { Factory(:chapter, :video => video, :user => user) }
+      let(:user) { FactoryGirl.create(:user) }
+      let!(:video) { FactoryGirl.create(:video, :user => user) }
+      let!(:chapter) { FactoryGirl.create(:chapter, :video => video, :user => user) }
 
       it 'should invoke update_kaltura_annotation' do
         chapter.should_receive(:delete_kaltura_annotation).and_return(true)

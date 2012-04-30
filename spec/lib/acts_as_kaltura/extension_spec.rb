@@ -12,9 +12,9 @@ describe ActsAsKaltura::Extension do
     describe ActsAsKaltura::Extension::Service::CuePointService do
 
       describe '#add' do
-        let!(:user) { Factory(:user) }
-        let!(:video) { Factory(:video, :user => user) }
-        let!(:chapter) { Factory(:chapter, :end_time => 1.3, :user => user, :video => video) }
+        let!(:user) { FactoryGirl.create(:user) }
+        let!(:video) { FactoryGirl.create(:video, :user => user) }
+        let!(:chapter) { FactoryGirl.create(:chapter, :end_time => 1.3, :user => user, :video => video) }
 
         it 'should set cuepoint_service' do
           Chapter.kaltura_client.cuepoint_service.should be
@@ -56,9 +56,9 @@ describe ActsAsKaltura::Extension do
       end
 
       describe '#update' do
-        let!(:user) { Factory(:user) }
-        let!(:video) { Factory(:video, :user => user) }
-        let!(:chapter) { Factory(:chapter, :end_time => 1.3, :user => user, :video => video) }
+        let!(:user) { FactoryGirl.create(:user) }
+        let!(:video) { FactoryGirl.create(:video, :user => user) }
+        let!(:chapter) { FactoryGirl.create(:chapter, :end_time => 1.3, :user => user, :video => video) }
         let!(:kaltura_cuepoint) do
           Chapter.kaltura_client.cuepoint_service.add( chapter.as_annotation_cuepoint )
         end
@@ -99,9 +99,9 @@ describe ActsAsKaltura::Extension do
       end
 
       describe '#delete' do
-        let!(:user) { Factory(:user) }
-        let!(:video) { Factory(:video, :user => user) }
-        let!(:chapter) { Factory(:chapter, :end_time => 1.3, :user => user, :video => video) }
+        let!(:user) { FactoryGirl.create(:user) }
+        let!(:video) { FactoryGirl.create(:video, :user => user) }
+        let!(:chapter) { FactoryGirl.create(:chapter, :end_time => 1.3, :user => user, :video => video) }
 
         it 'should delete an existing cuepoint' do
           r = Chapter.kaltura_client.cuepoint_service.delete(chapter.cuepoint_key)
@@ -114,9 +114,9 @@ describe ActsAsKaltura::Extension do
     end
 
     describe ActsAsKaltura::Extension::KalturaAnnotation do
-      let!(:user) { Factory(:user) }
-      let!(:video) { Factory(:video, :user => user) }
-      let!(:chapter) { Factory(:chapter, :user => user, :video => video) }
+      let!(:user) { FactoryGirl.create(:user) }
+      let!(:video) { FactoryGirl.create(:video, :user => user) }
+      let!(:chapter) { FactoryGirl.create(:chapter, :user => user, :video => video) }
       subject { chapter.as_annotation_cuepoint }
 
       it { should be_instance_of ActsAsKaltura::Extension::KalturaAnnotation }
