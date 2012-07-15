@@ -5,7 +5,9 @@ module ActsAsKaltura
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def acts_as_kaltura_category
+      def acts_as_kaltura_category(options = {})
+        self._kaltura_options = options
+
         before_create :create_kaltura_category
         before_update :update_kaltura_category
         before_destroy :destroy_kaltura_category
@@ -18,6 +20,12 @@ module ActsAsKaltura
         filter.parent_id_equal = 0
         self.kaltura_client.category_service.list(filter)
       end
+    end
+
+    def kaltura_parent_categories
+      filter = Kaltura::Filter::CategoryFilter.new
+      filter.parent_id_equal = 0
+      local_or_global_kaltura_client.category_service.list(filter)
     end
 
     def kaltura_category
@@ -48,7 +56,7 @@ module ActsAsKaltura
     private
       def create_kaltura_category
         if kaltura_reference_found?
-          @kaltura_category = self.class.kaltura_client.
+          @kaltura_category = local_or_global_kaltura_client.
               category_service.add self.as_kaltura_category
           self.kaltura_category_key = @kaltura_category.id
         end
@@ -56,14 +64,14 @@ module ActsAsKaltura
 
       def update_kaltura_category
         if self.kaltura_category_key.present?
-          @kaltura_category = self.class.kaltura_client.category_service.
+          @kaltura_category = local_or_global_kaltura_client.category_service.
               update(self.kaltura_category_key, self.as_kaltura_category)
         end
       end
 
       def destroy_kaltura_category
         if self.kaltura_category_key.present?
-          self.class.kaltura_client.category_service.
+          local_or_global_kaltura_client.category_service.
               delete(self.kaltura_category_key)
           @kaltura_category = nil
         end

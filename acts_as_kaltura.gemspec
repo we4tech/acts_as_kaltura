@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     "lib/acts_as_kaltura/annotation.rb",
     "lib/acts_as_kaltura/callbacks.rb",
     "lib/acts_as_kaltura/category.rb",
+    "lib/acts_as_kaltura/client.rb",
     "lib/acts_as_kaltura/config.rb",
     "lib/acts_as_kaltura/delegator.rb",
     "lib/acts_as_kaltura/extension.rb",
