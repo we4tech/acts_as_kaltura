@@ -8,10 +8,6 @@ module ActsAsKaltura
     class NoUploadedTokenFound < ::StandardError; end
     class KalturaVideoAddFailure < ::StandardError; end
 
-    included do
-      class_attribute :_kaltura_options, :instance_writer => false
-    end
-
     module ClassMethods
       def acts_as_kaltura_video(options = { })
         # Set instance accessors
@@ -27,7 +23,6 @@ module ActsAsKaltura
         validates :video_file, :presence => { :on => :create }
 
         # Set filters
-        after_validation :init_setting_scope
         before_save :process_uploaded_video_file
         before_create :create_kaltura_video_entry
         before_update :update_kaltura_video_entry
@@ -39,14 +34,6 @@ module ActsAsKaltura
     # Push user uploaded video file to kaltura server
     # If successful set upload token with the object
     #
-
-    def init_setting_scope
-      if self._kaltura_options[:setting_scope].present?
-        setting = self._kaltura_options[:setting_scope]
-        self.class._company_setting = setting.call(self)
-      end
-    end
-
     def process_uploaded_video_file
       if @video_file.present?
         video_file_stream     = if @video_file.respond_to?(:path, true)
@@ -54,12 +41,13 @@ module ActsAsKaltura
         else
           @video_file
         end
-        @uploaded_video_token = self.class.kaltura_client.
+        @uploaded_video_token = local_or_global_kaltura_client.
             media_service.upload(video_file_stream)
         raise ActsAsKaltura::Video::NoUploadedTokenFound if @uploaded_video_token.nil?
       end
     end
 
+    #
     # Create kaltura video entry based on current video data
     # if successful set kaltura id
     #
@@ -122,14 +110,14 @@ module ActsAsKaltura
     private
     def add_kaltuar_video_file(entry)
       if @video_file && @uploaded_video_token
-        self.class.kaltura_client.media_service.
+        local_or_global_kaltura_client.media_service.
             add_from_uploaded_file(entry, @uploaded_video_token)
       end
     end
 
     def update_kaltura_entry(entry)
       if kaltura_key.present?
-        self.class.kaltura_client.media_service.update(kaltura_key, entry)
+        local_or_global_kaltura_client.media_service.update(kaltura_key, entry)
         self.kaltura_syncd_at = Time.now
       end
     end
@@ -137,7 +125,7 @@ module ActsAsKaltura
     def find_kaltura_entry
       if kaltura_key
         if @kaltura_entry.nil?
-          @kaltura_entry = self.class.kaltura_client.media_service.get(kaltura_key)
+          @kaltura_entry = local_or_global_kaltura_client.media_service.get(kaltura_key)
         end
 
         @kaltura_entry
@@ -146,7 +134,7 @@ module ActsAsKaltura
 
     def destroy_kaltura_entry
       if kaltura_key
-        self.class.kaltura_client.media_service.delete(kaltura_key)
+        local_or_global_kaltura_client.media_service.delete(kaltura_key)
         @kaltura_entry = nil
       end
     rescue

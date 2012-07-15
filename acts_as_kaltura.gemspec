@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_kaltura"
-  s.version = "1.2.1"
+  s.version = "1.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["nhm tanveer hossain khan", "nafi ul karim"]
-  s.date = "2012-04-30"
+  s.date = "2012-07-15"
   s.description = "Acts as kaltura"
   s.email = ["hasan@somewherein.net", "goodnafi@gmail.com"]
   s.extra_rdoc_files = [
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     "lib/acts_as_kaltura/annotation.rb",
     "lib/acts_as_kaltura/callbacks.rb",
     "lib/acts_as_kaltura/category.rb",
+    "lib/acts_as_kaltura/client.rb",
     "lib/acts_as_kaltura/config.rb",
     "lib/acts_as_kaltura/delegator.rb",
     "lib/acts_as_kaltura/extension.rb",

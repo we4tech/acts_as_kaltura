@@ -1,8 +1,7 @@
-require 'yaml'
 require 'active_support/concern'
 
 module ActsAsKaltura
-  module Config
+  module Client
     extend ActiveSupport::Concern
 
     class Logger
@@ -12,67 +11,89 @@ module ActsAsKaltura
     end
 
     included do
-      @@_kaltura_config_file = nil
+      class_eval <<-CODE
+        attr_accessor :_instance_kaltura_client
+        cattr_accessor :_kaltura_client
+      CODE
+    end
 
-      class << self
-        def _kaltura_config_file=(file)
-          @@_kaltura_config_file = file
-        end
+    # Find an existing client instance or create one based on :setting_scope
+    # configuration.
+    # Returns kaltura client instance.
+    def kaltura_client
+      @kaltura_client ||= _create_kaltura_client
+    end
 
-        def _kaltura_config_file
-          if @@_kaltura_config_file.nil?
-            @@_kaltura_config_file = Rails.root.join('config', 'kaltura.yml').to_s
-          end
+    # Find local kaltura client instance if overrode over :setting_scope
+    # otherwise return the global client instance
+    def local_or_global_kaltura_client
+      if self.class.overrode_kaltura_client?
+        self.kaltura_client
+      else
+        self.class.kaltura_client
+      end
+    end
 
-          @@_kaltura_config_file
-        end
+    def _create_kaltura_client
+      @@_kaltura_clients ||= {}
+      config_callback = self._kaltura_options[:setting_scope]
+
+      unless config_callback.present?
+        raise "acts_as_kaltura_... :setting_scope => ... is not defined."
       end
 
-      cattr_accessor :_kaltura_client
+      configs = config_callback.call(self)
+      @@_kaltura_clients[configs] ||= self.class.create_kaltura_client(configs)
     end
 
     module ClassMethods
-      def kaltura_configs(env = Rails.env.to_s)
-        if !defined?(@@_kaltura_configs)
-          @@_kaltura_configs = YAML.load(File.read(_kaltura_config_file)).with_indifferent_access
+
+      # Create or return an existing kaltura client instance for the given
+      # environment. If configuration is based on instance. Create or return
+      # kaltura client instance for the given configuration and set it on
+      # +_instance_kaltura_client+ .
+      def kaltura_client(env = Rails.env.to_s)
+        if self._kaltura_client.nil?
+          self._kaltura_client = create_kaltura_client(kaltura_configs(env))
         end
 
-        @@_kaltura_configs[env]
+        self._kaltura_client
       end
 
-      def kaltura_client(env = Rails.env.to_s)
-        if _kaltura_client.nil?
-          configs = kaltura_configs(env)
-          config  = Kaltura::Configuration.new(configs[:partner_id])
+      def reload_kaltura_client(env = Rails.env.to_s)
+        self._kaltura_client = nil
+        self.kaltura_client(env)
+      end
 
-          # Set timeout if mentioned in configuration
+      def create_kaltura_client(configs)
+        config = _create_kaltura_config(configs)
+
+        Kaltura::Client.new(config).tap do |client|
+          session   = client.session_service.start(
+              configs[:admin_secret], '',
+              Kaltura::Constants::SessionType::ADMIN
+          )
+          client.ks = session
+        end
+      end
+
+    private
+
+      def _create_kaltura_config(configs)
+        Kaltura::Configuration.new(configs[:partner_id]).tap do |config|
           if configs[:timeout].present?
             config.timeout = configs[:timeout]
           end
 
-          # Set debug logger if mentioned in configuration
           if configs[:debug]
-            config.logger = ActsAsKaltura::Config::Logger.new
+            config.logger = ActsAsKaltura::Client::Logger.new
             _debug_response
           end
-
-          client          = Kaltura::Client.new(config)
-          session         = client.session_service.start(
-              configs[:admin_secret], '', Kaltura::Constants::SessionType::ADMIN)
-          client.ks       = session
-          _kaltura_client = client
         end
-
-        _kaltura_client
-      end
-
-      def reload_kaltura_client(env = Rails.env.to_s)
-        _kaltura_client = nil
-        kaltura_client
       end
 
       def _debug_response
-        if ['test', 'development'].include?(Rails.env)
+        if %w(test development).include?(Rails.env)
           Kaltura::ClientBase.class_eval <<-CODE
             def parse_to_objects(data)
               puts data
