@@ -35,7 +35,6 @@ module ActsAsKaltura
     end
 
     def _create_kaltura_client
-      @@_kaltura_clients ||= {}
       config_callback = self._kaltura_options[:setting_scope]
 
       unless config_callback.present?
@@ -43,7 +42,7 @@ module ActsAsKaltura
       end
 
       configs = config_callback.call(self)
-      @@_kaltura_clients[configs] ||= self.class.create_kaltura_client(configs)
+      self.class.create_kaltura_client(configs)
     end
 
     module ClassMethods
