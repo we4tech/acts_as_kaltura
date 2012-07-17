@@ -4,6 +4,8 @@ module ActsAsKaltura
   end
 end
 
-module Kaltura::Response
-  CuePointListResponse = ActsAsKaltura::Extension::CuePointListResponse
+module Kaltura
+  module Response
+    CuePointListResponse = ActsAsKaltura::Extension::CuePointListResponse
+  end
 end

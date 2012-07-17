@@ -16,7 +16,7 @@ class Video < ActiveRecord::Base
   belongs_to :company
   has_many :chapters
   acts_as_kaltura_video :delegate => [:thumbnail_url, :duration],
-                        :setting_scope => lambda { |v| v.company && v.company.setting ? v.company.setting.attributes.symbolize_keys!() : nil }
+                        :setting_scope => lambda { |v| v.company && v.company.setting ? v.company.setting.attributes.symbolize_keys!() : {} }
 
 
   def as_kaltura_entry
@@ -32,7 +32,9 @@ class Chapter < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
 
-  acts_as_kaltura_annotation
+  acts_as_kaltura_annotation :setting_scope => lambda { |v|
+    v.video.company && v.video.company.setting ? v.video.company.setting.attributes.symbolize_keys!() : {}
+  }
 
   def as_annotation_cuepoint
     ActsAsKaltura::Extension::KalturaAnnotation.new.tap do |cp|

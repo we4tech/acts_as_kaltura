@@ -9,6 +9,7 @@ module ActsAsKaltura
 
     module ClassMethods
       def acts_as_kaltura_annotation options = { }
+        self._kaltura_options = options
         before_create :create_kaltura_annotation
         after_update :update_kaltura_annotation
         after_destroy :delete_kaltura_annotation
@@ -17,7 +18,7 @@ module ActsAsKaltura
 
     def create_kaltura_annotation
       if self.cuepoint_key.nil?
-        @kaltura_annotation = self.class.kaltura_client.cuepoint_service.
+        @kaltura_annotation = local_or_global_kaltura_client.cuepoint_service.
             add( self.as_annotation_cuepoint )
         raise KalturaAnnotationAddFailure if @kaltura_annotation.nil?
 
@@ -27,7 +28,7 @@ module ActsAsKaltura
 
     def update_kaltura_annotation
       if self.cuepoint_key.present?
-        @kaltura_annotation = self.class.kaltura_client.cuepoint_service.
+        @kaltura_annotation = local_or_global_kaltura_client.cuepoint_service.
             update(self.cuepoint_key, self.as_annotation_cuepoint )
         raise KalturaAnnotationUpdateFailure if @kaltura_annotation.nil?
       end
@@ -35,7 +36,7 @@ module ActsAsKaltura
 
     def delete_kaltura_annotation
       if self.cuepoint_key.present?
-        self.class.kaltura_client.cuepoint_service.delete(self.cuepoint_key)
+        local_or_global_kaltura_client.cuepoint_service.delete(self.cuepoint_key)
         @kaltura_annotation = nil
       end
     end
@@ -51,7 +52,7 @@ module ActsAsKaltura
     private
       def find_kaltura_annotation
         if self.cuepoint_key.present?
-          self.class.kaltura_client.cuepoint_service.get(self.cuepoint_key)
+          local_or_global_kaltura_client.cuepoint_service.get(self.cuepoint_key)
         end
       end
   end
